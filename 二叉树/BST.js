@@ -25,13 +25,13 @@ class BST {
                 parent = cur;
                 if (data < cur.data) {
                     cur = cur.left;
-                    if (cur.left === null) {
+                    if (cur === null) {
                         parent.left = node;
                         break;
                     }
                 } else {
                     cur = cur.right;
-                    if (cur.right === null) {
+                    if (cur === null) {
                         parent.right = node;
                         break;
                     }                    
@@ -113,6 +113,15 @@ class BST {
         } else {
             node.right = this.removeNode(node.right, data);
             return node;
+        }
+    }
+    remove(data) {
+        this.root = this.removeNode(this.root, data);
+    }
+    removeNode(node, data) {
+        if (node === null) return null;
+        if (data === node.data) {
+            if (data.right === null && data.left === null) return 
         }
     }
     update(data) {
