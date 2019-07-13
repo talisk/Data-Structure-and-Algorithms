@@ -93,7 +93,6 @@ class CArray {
                 greater.push(arr[i]);
             }
         }
-        return this.qSort()
+        return this.qSort(lesser).concat(pivot, this.qSort(greater));
     }
-
 }
