@@ -7,6 +7,29 @@
     <title>Document</title>
 </head>
 <body>
-    <script src="./stack.js"></script>
+    <!-- <script src="./stack.js"></script> -->
+    <script>
+
+function permute(nums) {
+    const result = []
+    function dfs(cur = [], rest) {
+        if (!rest.length) {
+            result.push(cur)
+        }
+        for (let i = 0; i < rest.length; i++) {
+            let t_rest = rest.slice();
+            let t_cur = cur.slice()
+            let item = t_rest.splice(i, 1)[0]
+            t_cur.push(item)
+            dfs(t_cur, t_rest)
+        }
+    }
+    dfs([], nums)
+    return result
+}
+
+let a = permute([1,2,3])
+console.log(a)
+    </script>
 </body>
 </html>
