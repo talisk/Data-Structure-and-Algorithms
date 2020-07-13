@@ -9,26 +9,30 @@
 <body>
     <!-- <script src="./stack.js"></script> -->
     <script>
-
-function permute(nums) {
+const combine = (n, m) => {
+    const nums = []
     const result = []
+    for (let i = 0; i < n; i++) {
+        nums.push(i + 1)
+    }
     function dfs(cur = [], rest) {
-        if (!rest.length) {
+        if (cur.length + rest.length < m) return
+        if (cur.length === m) {
             result.push(cur)
+            return
         }
         for (let i = 0; i < rest.length; i++) {
-            let t_rest = rest.slice();
-            let t_cur = cur.slice()
-            let item = t_rest.splice(i, 1)[0]
-            t_cur.push(item)
-            dfs(t_cur, t_rest)
+            let c = cur.slice();
+            c.push(rest[i]);
+            let res = rest.slice(i + 1);
+            dfs(c, res)
         }
     }
     dfs([], nums)
     return result
 }
 
-let a = permute([1,2,3])
+let a = combine(4, 2)
 console.log(a)
     </script>
 </body>
