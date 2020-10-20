@@ -9,18 +9,37 @@
 <body>
     <!-- <script src="./stack.js"></script> -->
     <script>
-var twoSum = function(numbers, target) {
-    let left = 0, 
-        right = numbers.length - 1;
-    while (left >= right) {
-        let result = numbers[left] + numbers[right];
-        if (result === target) return [left, right];
-        if (result > target) right--;
-        if (result < target) left++;
+let node = {
+    val: 4,
+    left: {
+        val: 3,
+        left: {
+            val: 1
+        },
+        right: {
+            val: 2
+        }
     }
-    return null
+}
+var reverseVowels = function(s) {
+    const isYuanYin = (str) => 'aoeiuAOEIU'.indexOf(str) !== -1
+    let left = 0, right = s.length - 1
+    while (left < right) {
+        while(left < right && !isYuanYin(s[left])) left++
+        while(left < right && !isYuanYin(s[right])) right--
+        if (left < right) {
+            let swap = s[left]
+            s[left] = s[right]
+            s[right] = swap
+            right--
+            left++
+        }
+    }
+    return s
 };
-twoSum([2,7,11,15], 9)
+console.log(reverseVowels('hello'))
     </script>
 </body>
 </html>
+1  0  2  0  0  3 
+                
