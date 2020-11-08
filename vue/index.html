@@ -6,6 +6,7 @@
   <title>Document</title>
 </head>
 <body>
+  <div id="a"></div>
   <script src="./vue.js"></script>
   <script>
     let data = {
@@ -17,7 +18,22 @@
       text: '1',
       
     }
-    observe(data)
+    let obj = {a: 1}
+    var bb = Vue.component('sunyanzhe', {
+      props: {
+        obj: Object
+      },
+      template: `<div >{{obj.a}}<button @click="clickHandle">click</button></div>`,
+      methods: {
+        clickHandle() {
+          alert(1)
+          this.obj.a = 2
+        }
+      }
+    })
+    var aa = new Vue({
+      template: `<div>{{Date.now()}}<sunyanzhe :obj="{a: 1}" /></div>`
+    }).$mount(document.getElementById('a'))
   </script>
 </body>
 </html>

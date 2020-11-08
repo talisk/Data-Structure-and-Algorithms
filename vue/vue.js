@@ -1674,6 +1674,7 @@ function mergeAssets(
     }
 }
 //为每一个组件指令添加一个
+// component directive filter
 ASSET_TYPES.forEach(function (type) {
     strats[type + 's'] = mergeAssets;
 });
@@ -3004,7 +3005,7 @@ function normalizeArrayChildren(
                                     var i, c, lastIndex, last;
                                     for (i = 0; i < children.length; i++) {  //循环数组子节点children
                                         c = children[i];
-                                        //判断是否是空 并且 c是一个布尔值的时候
+                                        //判断是否是空 或者 c是一个布尔值的时候
                                         if (isUndef(c) || typeof c === 'boolean') {
                                             continue
                                         }
@@ -3584,7 +3585,6 @@ function lifecycleMixin(Vue) {
             // initial render    起始指令
             //创建dmo 虚拟dom
 
-            debugger;
             //更新虚拟dom
             vm.$el = vm.__patch__(
                 vm.$el, //真正的dom
@@ -4200,15 +4200,15 @@ Watcher.prototype.get = function get() {
         //依赖深度观察
         if (this.deep) {
             // //如果val 有__ob__ 属性
-            // if (val.__ob__) {
-            //     var depId = val.__ob__.dep.id;
-            //     // seen 中是否含有depId 属性或者方法
-            //     if (seen.has(depId)) {
-            //         return
-            //     }
-            //     //如果没有则添加进去
-            //     seen.add(depId);
-            // }
+            if (val.__ob__) {
+                var depId = val.__ob__.dep.id;
+                // seen 中是否含有depId 属性或者方法
+                if (seen.has(depId)) {
+                    return
+                }
+                //如果没有则添加进去
+                seen.add(depId);
+            }
             //为 seenObjects 深度收集val 中的key
             traverse(value);
         }
@@ -8075,7 +8075,6 @@ function createPatchFunction(backend) {
                             ) {
         
         
-        debugger;
                                 if (isUndef(vnode)) {　　　　//如果没有定义新的vonde
                                     if (isDef(oldVnode)) { //如果没有定义旧的vonde
                                         invokeDestroyHook(oldVnode); //如果vnode不存在但是oldVnode存在，说明意图是要销毁老节点，那么就调用invokeDestroyHook(oldVnode)来进行销毁
@@ -8381,7 +8380,6 @@ var baseModules = [
     * */
 
 function updateAttrs(oldVnode, vnode) {
-    debugger
     var opts = vnode.componentOptions;  //获取组件的拓展参数
     if (isDef(opts) && opts.Ctor.options.inheritAttrs === false) {  // 判断是否定义有拓展参数，并且需要Ctor.options.inheritAttrs 不等于 false的 时候才执行下面的代码
         return
@@ -10093,7 +10091,6 @@ function getTransitionInfo(
 function getTimeout(delays, durations) {
     
     
-    debugger
     /* istanbul ignore next */
     while (delays.length < durations.length) {
         delays = delays.concat(delays);
@@ -11129,7 +11126,6 @@ Vue.prototype.__patch__ = inBrowser ? patch : noop;
 Vue.prototype.$mount = function (el,  //真实dom 或者是string
                                     hydrating  //新的虚拟dom vonde
 ) {
-        debugger
     el = el && inBrowser ? query(el) : undefined;
     return mountComponent(
                             this,
