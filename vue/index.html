@@ -9,30 +9,36 @@
   <div id="a"></div>
   <script src="./vue.js"></script>
   <script>
-    let data = {
-      arr: [1, 2, 3],
-      obj: {
-        name: 'syz',
-        age: 11
-      },
-      text: '1',
+    // let data = {
+    //   arr: [1, 2, 3],
+    //   obj: {
+    //     name: 'syz',
+    //     age: 11
+    //   },
+    //   text: '1',
       
-    }
+    // }
     let obj = {a: 1}
     var bb = Vue.component('sunyanzhe', {
       props: {
-        obj: Object
+        obj: Object,
       },
-      template: `<div >{{obj.a}}<button @click="clickHandle">click</button></div>`,
+      template: `<div>{{obj.a}}<button @click="clickHandle">click</button></div>`,
       methods: {
         clickHandle() {
-          alert(1)
-          this.obj.a = 2
+          this.obj.a++
+          this.$emit('click')
         }
       }
     })
     var aa = new Vue({
-      template: `<div>{{Date.now()}}<sunyanzhe :obj="{a: 1}" /></div>`
+      template: `<div>{{date}}<sunyanzhe @click="date = Date.now()" :obj="obj" /></div>`,
+      data() {
+        return {
+          obj: {a: 1},
+          date: Date.now()
+        }
+      }
     }).$mount(document.getElementById('a'))
   </script>
 </body>

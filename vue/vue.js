@@ -3537,16 +3537,21 @@ function initLifecycle(vm) {
     var options = vm.$options;
     // locate first non-abstract parent
     //定位第一个非抽象父节点
+    // abstract节点目前只有两个 keep-alive和 transition
     var parent = options.parent;
+
+    // 如果有父级 并且 当前节点不是预置Component
+    // 如果当前节点是预置Component 父级不添加此child
     if (parent && !options.abstract) {
-        //判断parent父亲节点是否存在，并且判断抽象节点是否存在
+        // 父级是预置Component 并且 还有父级
+        // 找到父级不是预置Component
         while (parent.$options.abstract && parent.$parent) {
-            //如果有父亲抽象节点，则把父层或爷爷节点   给当前节点的父亲节点
             parent = parent.$parent;
         }
         //子节点添加 vm
         parent.$children.push(vm);
     }
+
     //添加$parent 参数
     vm.$parent = parent;
     //判断parent 是否是顶层 root 如果是 则$root赋值给$root
@@ -3652,7 +3657,6 @@ function lifecycleMixin(Vue) {
         //获取观察者的长度
         var i = vm._watchers.length;
         // //把观察者添加到队列里面 当前Watcher添加到vue实例上
-        //vm._watchers.push(this);
         while (i--) {
             vm._watchers[i].teardown();
         }
@@ -3912,6 +3916,7 @@ function callHook(vm,  //虚拟dom  vonde
     // #7573 disable dep collection when invoking lifecycle hooks
     //调用生命周期钩子时禁用dep集合
     //Dep.target = _target; //存储
+    console.log( (vm?.$vnode?.tag ?? vm?._vnode?.tag) + " ----- " + hook)
     pushTarget();
     //在vm 中添加声明周期函数
     var handlers = vm.$options[hook];
