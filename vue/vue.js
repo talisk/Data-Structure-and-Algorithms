@@ -3916,7 +3916,7 @@ function callHook(vm,  //虚拟dom  vonde
     // #7573 disable dep collection when invoking lifecycle hooks
     //调用生命周期钩子时禁用dep集合
     //Dep.target = _target; //存储
-    console.log( (vm?.$vnode?.tag ?? vm?._vnode?.tag) + " ----- " + hook)
+    console.log( (vm?.$vnode?.tag ?? vm?._vnode?.tag) + " -----" + hook)
     pushTarget();
     //在vm 中添加声明周期函数
     var handlers = vm.$options[hook];
@@ -4118,10 +4118,10 @@ var Watcher = function Watcher(
     vm._watchers.push(this);
     // options
     if (options) { //如果有参数
-        this.deep = !!options.deep; //实际
-        this.user = !!options.user; //用户
-        this.lazy = !!options.lazy; //懒惰 ssr 渲染
-        this.sync = !!options.sync; //如果是同步
+        this.deep = !!options.deep;
+        this.user = !!options.user;
+        this.lazy = !!options.lazy;
+        this.sync = !!options.sync;
     } else {
         this.deep = this.user = this.lazy = this.sync = false;
     }
@@ -4142,28 +4142,6 @@ var Watcher = function Watcher(
         //获取值的函数
         this.getter = expOrFn;
     } else {
-        //如果是keepAlive 组件则会走这里
-        //path 因该是路由地址
-        if (bailRE.test(path)) {  //  匹配上 返回 true     var bailRE = /[^\w.$]/;  //匹配不是 数字字母下划线 $符号   开头的为true
-            return
-        }
-        // //匹配不上  path在已点分割
-        // var segments = path.split('.');
-        // return function (obj) {
-        //
-        //     for (var i = 0; i < segments.length; i++) {
-        //         //如果有参数则返回真
-        //         if (!obj) {
-        //             return
-        //         }
-        //         //将对象中的一个key值 赋值给该对象 相当于 segments 以点拆分的数组做obj 的key
-        //         obj = obj[segments[i]];
-        //     }
-        //     //否则返回一个对象
-        //     return obj
-        // }
-        //匹配不是 数字字母下划线 $符号   开头的为true
-
         this.getter = parsePath(expOrFn);
         if (!this.getter) { //如果不存在 则给一个空的数组
             this.getter = function () {
@@ -4201,20 +4179,13 @@ Watcher.prototype.get = function get() {
     } finally {
         // "touch" every property so they are all tracked as
         // dependencies for deep watching
-        //“触摸”每个属性，以便它们都被跟踪为
-        //依赖深度观察
+        /**
+         * 由于对象的所有属性都设置了getter, 并且getter里有收集依赖Dep
+         * 所以只要获取一下值, 让这个值下的所有属性依赖都把这个watcher收集了
+         * 在以后, 不管这个值下面的任何属性发生了变动, 都会触发watcher的update
+         * 破费!!!
+         */
         if (this.deep) {
-            // //如果val 有__ob__ 属性
-            if (val.__ob__) {
-                var depId = val.__ob__.dep.id;
-                // seen 中是否含有depId 属性或者方法
-                if (seen.has(depId)) {
-                    return
-                }
-                //如果没有则添加进去
-                seen.add(depId);
-            }
-            //为 seenObjects 深度收集val 中的key
             traverse(value);
         }
         // 出盏一个pushTarget
@@ -4321,8 +4292,9 @@ Watcher.prototype.evaluate = function evaluate() {
 };
 /**
  * Depend on all deps collected by this watcher.
- * 依赖于此监视程序收集的所有dep。
- * 循环deps 收集 newDeps dep 当newDeps 数据被清空的时候重新收集依赖
+ * 纯给computed用的
+ * 
+ * 
  */
 Watcher.prototype.depend = function depend() {
     // this.newDeps.push(dep); //添加一个deps
@@ -4553,7 +4525,13 @@ function initData(vm) {
 //转换数据 如果数据是 一个函数的时候 执行该函数 拿到数据
 function getData(data, vm) {
     // #7573 disable dep collection when invoking data getters
-    //调用数据getter时禁用dep收集
+    /**
+     * 这里解决的问题是 
+     * 当子组件的data定义中 使用了父组件的属性
+     * 如果不将Target清空, 在赋值时父组件传递到子组件的属性会收集一次依赖, 这个依赖是父组件的渲染函数
+     * 在这种情况下如果子组件更新父组件的属性时, 会导致父组件的渲染函数执行两次
+     * 例子 ---- index#7573.html
+     **/    
     pushTarget();
     try {
         //执行函数 获取数据

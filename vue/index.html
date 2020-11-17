@@ -22,21 +22,31 @@
     var bb = Vue.component('sunyanzhe', {
       props: {
         obj: Object,
+        msg: Number
       },
-      template: `<div>{{obj.a}}<button @click="clickHandle">click</button></div>`,
+      data() {
+        return {
+          message: this.msg 
+        }
+      },
+      template: `<div>{{obj.a}}<button @click="clickHandle">click</button>{{message}}</div>`,
       methods: {
         clickHandle() {
           this.obj.a++
-          this.$emit('click')
+          this.$emit("update:msg", 10);
+          // this.$nextTick(() => console.log(this.$el.innerHTML))
+          Promise.resolve().then(() => console.log(this.$el.innerHTML))
+          // this.$emit('click')
         }
       }
     })
     var aa = new Vue({
-      template: `<div>{{date}}<sunyanzhe @click="date = Date.now()" :obj="obj" /></div>`,
+      template: `<div>{{date}}<sunyanzhe @click="date = Date.now()" :obj="obj" :msg.sync="msg" /></div>`,
       data() {
         return {
           obj: {a: 1},
-          date: Date.now()
+          date: Date.now(),
+          msg: 1
         }
       }
     }).$mount(document.getElementById('a'))
