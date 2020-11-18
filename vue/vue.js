@@ -4293,8 +4293,20 @@ Watcher.prototype.evaluate = function evaluate() {
 /**
  * Depend on all deps collected by this watcher.
  * 纯给computed用的
+ * 让当前computed所拥有的Dep
+ * 添加目前的Dep.target，一般应该就是调用了这个computedWatcher的渲染函数了
  * 
+ * 由于ComputedWatcher没有Dep，
+ * 它依赖他所调用的data， 并且在调用computed时才会去计算值
+ * 所以它所依赖的data改变的话，要做两件事
+ * 1. 通知computedWatcher：我的值已经改变了，下次要重新计算值了
+ * 2. 通知渲染函数，重新调用渲染函数（渲染函数中会调用computed，从而计算值）
  * 
+ * 为了做到这两步
+ * data的Dep需要收集两个watcher，一个是computedWatcher，另一个就是调用了computed的渲染Watcher
+ * 
+ * 收集computedWatcher，会在computedWatcher走this.get()，获取data时getter自动收集
+ * 收集渲染Watcher，就需要depend了，此时computedWatcher的Dep中已经有了data的Dep， 继续让这个Dep收集当前的Target（也就是渲染函数）就可以了
  */
 Watcher.prototype.depend = function depend() {
     // this.newDeps.push(dep); //添加一个deps
@@ -4303,8 +4315,6 @@ Watcher.prototype.depend = function depend() {
     var i = this.deps.length;
     
     while (i--) {
-        // 为Watcher 添加dep 对象
-        // this.newDeps.push(dep); //添加一个deps
         this$1.deps[i].depend();
     }
 };

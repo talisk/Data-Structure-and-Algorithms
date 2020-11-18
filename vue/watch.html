@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="a"></div>
+  <script src="./vue.js"></script>
+  <script>
+    let i = 0
+    var aa = new Vue({
+      template: `<div>{{msg}}<button @click="clickHandle">Click</button></div>`,
+      data() {
+        return {
+          msg: 1,
+          obj: {
+            a: 'a'
+          },
+          watchMsg: 1
+        }
+      },
+      methods: {
+        clickHandle() {
+          this.obj = i === 0 ? 'a' : 'b' 
+          i++
+        }
+      },
+      watch: {
+        'obj.a'(val) {
+          console.log(val)
+        }
+      }
+    }).$mount(document.getElementById('a'))
+  </script>
+</body>
+</html>
