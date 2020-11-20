@@ -22,14 +22,8 @@
     var bb = Vue.component('sunyanzhe', {
       props: {
         obj: Object,
-        msg: Number
       },
-      data() {
-        return {
-          message: this.msg 
-        }
-      },
-      template: `<div>{{obj.a}}<button @click="clickHandle">click</button>{{message}}</div>`,
+      template: `<div>{{obj.a}}<button @click="clickHandle">click</button></div>`,
       methods: {
         clickHandle() {
           this.obj.a++
@@ -41,7 +35,7 @@
       }
     })
     var aa = new Vue({
-      template: `<div>{{date}}<sunyanzhe @click="date = Date.now()" :obj="obj" :msg.sync="msg" /></div>`,
+      template: `<div>{{date}}<sunyanzhe @click="date = Date.now()" :obj="obj" /></div>`,
       data() {
         return {
           obj: {a: 1},

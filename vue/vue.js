@@ -3789,7 +3789,7 @@ function mountComponent(
 }
 //更新子组件 循环props 把他们添加到观察者中 ，更新事件
 function updateChildComponent(
-                                vm,// 虚拟dom vonde
+                                vm,// vue实例
                                 propsData, //props 数据属性
                                 listeners, //事件
                                 parentVnode, //父亲 虚拟dom vonde
@@ -3916,7 +3916,6 @@ function callHook(vm,  //虚拟dom  vonde
     // #7573 disable dep collection when invoking lifecycle hooks
     //调用生命周期钩子时禁用dep集合
     //Dep.target = _target; //存储
-    console.log( (vm?.$vnode?.tag ?? vm?._vnode?.tag) + " -----" + hook)
     pushTarget();
     //在vm 中添加声明周期函数
     var handlers = vm.$options[hook];
@@ -11500,7 +11499,7 @@ function parseHTML(
                                                                 }
                                                                 // Start tag:
                                                                     //解析开始标记 标记开始标签
-                                                                //  获取开始标签的名称，属性集合，开始位置和结束位置，并且返回该对象
+                                                                //  找tagname 找attr 开始 结束位置 是否非闭合标签(.../>) 返回Object
                                                                 var startTagMatch = parseStartTag();
                                                                 if (startTagMatch) {
                                                                                     //把数组对象属性值循环变成对象，这样可以过滤相同的属性
@@ -14366,6 +14365,7 @@ var createCompiler = createCompilerCreator(
                                                                         
                                                                         //返回ast模板对象
                                                                         var ast = parse(template.trim(), options);
+                                                                        console.log(ast)
                                                                         if (options.optimize !== false) {  //optimize 的主要作用是标记 static 静态节点，
                                                                         // * 循环递归虚拟node，标记是不是静态节点
                                                                         //*  根据node.static或者 node.once 标记staticRoot的状态
