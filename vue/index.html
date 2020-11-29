@@ -23,7 +23,10 @@
       props: {
         obj: Object,
       },
-      template: `<div>{{obj.a}}<button @click="clickHandle">click</button></div>`,
+      template: `<div>{{obj.a}}{{a}}<button @click="clickHandle">click</button></div>`,
+      computed: {
+        a() {return this.obj.a+1}
+      },
       methods: {
         clickHandle() {
           this.obj.a++
@@ -42,7 +45,7 @@
           date: Date.now(),
           msg: 1
         }
-      }
+      },
     }).$mount(document.getElementById('a'))
   </script>
 </body>
