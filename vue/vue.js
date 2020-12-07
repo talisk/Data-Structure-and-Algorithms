@@ -4382,16 +4382,36 @@ function initState(vm) {
     var opts = vm.$options; //初始化参数
     //判断是否有props属性，如果有则添加观察者
     if (opts.props) {
-        //初始化props 检验props 数据格式是否是规范的如果是规范的则添加到观察者队列中
+        // 初始化_props
+        // shouldObserve = false， 只绑定一层，也就是_props下面的属性，因为一般情况传递过来的props的只都是响应式的
+        // 一些校验值是否传递的正确，这里有个一个点：就是当传递的值为空，但是设置了default的情况下，会将整个default Observe了
+        // 例子
+        
+        /**
+         * prop: {
+         *  value: {
+         *      type: Object,
+         *      default() => ({a: 1})
+         *  }
+         * }
+         */
+        
+        // 这种情况如果父级没有传这个prop的话，vue会将default的值进行observer处理
+
+        // 但是如果父级传值了， 但是传的不是一个响应式的数据过来，那么这个prop就没有响应式
+
         initProps(vm, opts.props);
     }
 
     if (opts.methods) { //事件
-        //   初始化事件Methods 把事件 冒泡到 vm[key] 虚拟dom  最外层中
+        // 初始化事件
+        // 校验是否与Porps有重名，
+        // 将所有的事件都bind一次，让this指向vm
         initMethods(vm, opts.methods);
     }
     if (opts.data) { //初始化数据
-        // 初始化数据 获取options.data 的数据 将他们添加到 监听者中
+        // 校验是否与props methods有重名
+        // 经典observe 没啥可说的
         
         initData(vm);
         
@@ -5664,9 +5684,9 @@ function createComponentInstanceForVnode(
                                             refElm //当前的dom
 ) {
     var options = {
-        _isComponent: true, //是否是组件
-        parent: parent, //组件的父节点
-        _parentVnode: vnode, //组件的 虚拟vonde 父节点
+        _isComponent: true, // 定义为组件，在调用_init时，用于区分
+        parent: parent, // 父节点实例 Vue实例 或者VueCompoent实例
+        _parentVnode: vnode, // 组件的vNode， $vnode
         _parentElm: parentElm || null, //父节点的dom el
         _refElm: refElm || null //当前节点 el
     };
@@ -6139,7 +6159,15 @@ function initMixin(Vue) {
         // a flag to avoid this being observed 一个避免被观察到的标志
         vm._isVue = true;
         // merge options 合并选项 参数
-        if (options && options._isComponent) { //判断是否是组件
+        /**
+         * 注意：这里虽然都时options，
+         * 但是对于new Vue的options，和component的options时不一样的
+         * new Vue的options，其实就是我们的入参：data、computed啥的
+         * component的是componentOptions，是在createComponentInstanceForVnode时创建的，其中就有一个属性，_isComponent，用于区分是否为组件
+         * 以上说的component的，是我们正常写代码那种标签引入的。比如 <component-demo />，这种
+         * 还有一种啥情况的，就是Vue.extend，extend之后再 new。这样走的还是new Vue的那套逻辑。
+         */
+        if (options && options._isComponent) {
             // optimize internal component instantiation
             // since dynamic options merging is pretty slow, and none of the
             // internal component options needs special treatment.
@@ -6162,12 +6190,12 @@ function initMixin(Vue) {
         }
         // expose real self 暴露真实的self
         vm._self = vm;
-        initLifecycle(vm); //初始化生命周期 标志
-        initEvents(vm); //初始化事件
-        initRender(vm); // 初始化渲染
+        initLifecycle(vm); // 定义钩子变量（布尔值），查找父级和根节点，初始化子节点数组， 
+        initEvents(vm); //初始化事件 通过$node拿到要注册的函数 @[name]="method" 中的method， 注意这里的method已经bind过，其this指向的是父级的vm，拿到name和method之后将其注册到当前vm中，这样当当前vm触发$emit时，自身的$on就会触发父级的method。
+        initRender(vm); // 为当前vm定义_c，因为template转换后的compiler函数中_c表示了创建VNode
         callHook(vm, 'beforeCreate'); //触发beforeCreate钩子函数
         initInjections(vm); // resolve injections before data/props 在数据/道具之前解决注入问题 //初始化 inject
-        initState(vm);  //    //初始化状态
+        initState(vm);  //    将options逐个操作，props => methods => data => computed => watch
         initProvide(vm); // resolve provide after data/props  解决后提供数据/道具  provide 选项应该是一个对象或返回一个对象的函数。该对象包含可注入其子孙的属性，用于组件之间通信。
         callHook(vm, 'created'); //触发created钩子函数
 

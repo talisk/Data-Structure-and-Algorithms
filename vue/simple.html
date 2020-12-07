@@ -19,7 +19,12 @@
           data: 1
         }
       },
-      template: `<div><item :data="data" @componentClick="clickHandle" /></div>`,
+      computed: {
+        info() {
+          return this.data
+        }
+      },
+      template: `<div><item :data="data" @componentClick="clickHandle" />{{info}}</div>`,
       methods: {
         clickHandle(data) {
           alert(data)

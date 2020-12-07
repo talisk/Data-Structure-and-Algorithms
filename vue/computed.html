@@ -10,20 +10,16 @@
   <script src="./vue.js"></script>
   <script>
     var aa = new Vue({
-      template: `<div>{{computedMsg}}<button @click="clickHandle">Click</button></div>`,
+      template: `<div>{{msg}}<button @click="clickHandle">Click</button></div>`,
       data() {
         return {
           msg: 1
         }
       },
-      computed: {
-        computedMsg() {
-          return `This msg is ${this.msg}` 
-        }
-      },
       methods: {
         clickHandle() {
-          console.log(this.computedMsg)
+          let msg = this.msg
+          this._data = { msg }
           this.msg++
         }
       }
