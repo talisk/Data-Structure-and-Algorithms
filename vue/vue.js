@@ -6222,10 +6222,10 @@ function initInternalComponent(vm,  //vue实例
     // doing this because it's faster than dynamic enumeration. 这样做是因为它比动态枚举快。
     // var options = {
     //     _isComponent: true, //是否是组件
-    //     parent: parent, //组件的父节点
-    //     _parentVnode: vnode, //组件的 虚拟vonde 父节点
+        // parent: parent, // 父节点vm实例
+    //     _parentVnode: vnode, // $vnode
     //     _parentElm: parentElm || null, //父节点的dom el
-    //     _refElm: refElm || null //当前节点 el
+    //     _refElm: refElm || null // 兄弟节点
     // }
     var parentVnode = options._parentVnode;
     opts.parent = options.parent; //组件的父节点

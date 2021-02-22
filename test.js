@@ -133,3 +133,27 @@ function defineReactive(obj, key, val, customSetter, shallow) {
     }
   })
 }
+
+function walk(obj) {
+  for (let key of Object.keys(obj)) {
+    defineReactive(obj, key, obj[key])
+  }
+}
+
+function defineReactive(obj, key, val) {
+  if (typeof val === 'object') {
+    walk(val)
+  }
+  Object.defineProperty(obj, key, {
+    enumerable: true,
+    configurable: true,
+    get() {
+      console.log(key)
+      return val
+    },
+    set(value) {
+      console.log('set===' + key)
+      val = value
+    }
+  })
+}

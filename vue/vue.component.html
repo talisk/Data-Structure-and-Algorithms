@@ -6,19 +6,26 @@
   <title>Document</title>
 </head>
 <body>
+  <div id="app"></div>
   <script src="./vue.js"></script>
   <script>
-    let item = Vue.component('item', {
+    let obj = Object.preventExtensions({a: 1})
+    let item = new Vue({
       data() {
         return {
-          data: 'data'
+          obj,
+          data: 1
         }
       },
-      template: '<div>{{data}}</div>',
+      template: '<div>{{obj.a}}<button @click="data++">click</button>{{data}}</div>',
       created() {
-        console.log(this.data)
+        let vm = this
+       setTimeout(() => {
+        vm.obj.a = 2
+        console.log(vm.obj.a)
+       }, 1000)
       }
-    })
+    }).$mount('#app')
   </script>
 </body>
 </html>
