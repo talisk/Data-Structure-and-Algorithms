@@ -7423,7 +7423,6 @@ function createPatchFunction(backend) {
                                 insertedVnodeQueue //已经安装好的vonde
                             );
                             if (isDef(data)) {
-                                // invokeCreateHooks，循环cbs.create 钩子函数，并且执行调用，其实cbs.create 钩子函数就是platformModules中的attrs中 updateAttrs更新属性函数。如果是组件则调用componentVNodeHooks中的 create
                                 invokeCreateHooks(vnode, insertedVnodeQueue);
                             }
                                 //插入一个真实的dom，如果ref$$1.parentNode等于parent是。ref$$1和elm他们是兄弟节点则插入ref$$1前面
@@ -7509,7 +7508,6 @@ function createPatchFunction(backend) {
         }
         vnode.elm = vnode.componentInstance.$el; //组件实例
         if (isPatchable(vnode)) { //   判断组件是否定义有 tag标签
-            //invokeCreateHooks，循环cbs.create 钩子函数，并且执行调用，其实cbs.create 钩子函数就是platformModules中的attrs中 updateAttrs更新属性函数。如果是组件则调用componentVNodeHooks中的 create
             invokeCreateHooks(vnode, insertedVnodeQueue);
             //为有作用域的CSS设置作用域id属性。
             //这是作为一种特殊情况来实现的，以避免开销
@@ -7624,7 +7622,6 @@ function createPatchFunction(backend) {
         //判断组件是否定义有 tag标签
         return isDef(vnode.tag)
     }
-        // invokeCreateHooks，循环cbs.create 钩子函数，并且执行调用，其实cbs.create 钩子函数就是platformModules中的attrs中 updateAttrs更新属性函数。如果是组件则调用componentVNodeHooks中的 create
     function invokeCreateHooks(vnode, insertedVnodeQueue) {
         // 这里的cbs如下：
         /*
@@ -8047,8 +8044,6 @@ function createPatchFunction(backend) {
                 for (var key in data) {
                     if (!isRenderedModule(key)) {
                         fullInvoke = true;
-                        // invokeCreateHooks，循环cbs.create 钩子函数，并且执行调用，其实cbs.create 钩子函数就是platformModules中的attrs中 updateAttrs更新属性函数。如果是组件则调用componentVNodeHooks中的 create
-                        invokeCreateHooks(vnode, insertedVnodeQueue);
                         break
                     }
                 }
