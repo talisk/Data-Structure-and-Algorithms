@@ -18,22 +18,8 @@
         this.queue = []
       }
       add(promiseCreator) {
-        let self = this,
-          queue = this.queue
-        return new Promise((resolve) => {
-          this.temp++
-          if (this.temp <= this.max) {
-            resolve(promiseCreator().then(function f() {
-              self.temp--
-              if (queue.length) {
-                let { tempPromiseCreator, tempResolve } = queue.shift()
-                tempResolve(tempPromiseCreator().then(f))
-              }
-            }))
-          } else {
-            queue.push({ tempPromiseCreator: promiseCreator, tempResolve: resolve })
-          }
-        })
+        this.temp++
+        
       }
     }
     const timeout = (time) => new Promise(resolve => { setTimeout(resolve, time) })
