@@ -39,6 +39,42 @@
       }
       return i
     }
+
+
+
+
+
+
+
+
+
+    function quickSort(arr, left = 0, right = arr.length - 1) {
+      if (arr.length > 1) {
+        let index = sort(arr, left, right)
+        if (left < index - 1) {
+          quickSort(arr, left, index - 1)
+        }
+        if (right > index) {
+          quickSort(arr, index, right)
+        }
+      }
+      return arr
+    }
+
+    function sort(arr, left, right) {
+      let mid = (left + right) >> 1,
+        povit = arr[mid];
+      while (left <= right) {
+        while (arr[left] < povit) left++
+        while (arr[right] > povit) right--
+        if (left <= right) {
+          [arr[left], arr[right]] = [arr[right], arr[left]]
+          left++
+          right--
+        }
+      }
+      return left
+    }
   </script>
 </body>
 </html>
