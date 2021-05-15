@@ -5,7 +5,9 @@
 ## 网络基础
 7层网络模型记住
 1. TCP/IP协议
+
   **文章：**
+
     * TCP/IP那些事（上）：https://coolshell.cn/articles/11564.html
 
     * TCP/IP那些事（下）：https://coolshell.cn/articles/11609.html
@@ -13,7 +15,10 @@
     * TCP协议详解：https://blog.csdn.net/qq_38410730/article/details/81707212
 
 2. HTTP 
-  文章：HTTP灵魂之问（看到第12标题即可）：https://juejin.cn/post/6844904100035821575
+
+  **文章：**
+
+  * HTTP灵魂之问（看到第12标题即可）：https://juejin.cn/post/6844904100035821575
 
 3. HTTPS SSL/TLS
 
@@ -36,9 +41,22 @@
 5. UDP协议（简单理解即可，与TCP区别，有哪方面优势）
   
   **文章：**
-    * 
+
+    * UDP详解：https://zhuanlan.zhihu.com/p/337678680
+
 6. HTTP/3 （简单了解即可，基于何种协议，为了解决什么问题）
-7. CORS跨域
+  **文章：**
+
+    * HTTP3.0：https://blog.csdn.net/wolfGuiDao/article/details/108729560
+
+7. 跨域
+  **文章：**
+    
+    * JSONP：
+    
+    * CORS：
+
+    * 反向代理原理
 
 ## 浏览器基础
 1. 浏览器缓存
