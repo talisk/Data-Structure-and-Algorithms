@@ -3,10 +3,10 @@
 **一篇文章有的段落没看懂没关系，记下来继续往下看，从其他文章中找答案。文章都是人写的、没经过校对，出现不理解的段落很正常。多读多搜索其他的文章，从其他文章中找问题的解释。**
 
 ## 网络基础
-7层网络模型记住
+
 1. TCP/IP协议
 
-  **文章：**
+  文章：
 
     * TCP/IP那些事（上）：https://coolshell.cn/articles/11564.html
 
@@ -16,13 +16,13 @@
 
 2. HTTP 
 
-  **文章：**
+  文章：
 
   * HTTP灵魂之问（看到第12标题即可）：https://juejin.cn/post/6844904100035821575
 
 3. HTTPS SSL/TLS
 
-  **文章：**
+  文章：
   
     * 对称加密与非对称加密：http://47.98.159.95/my_blog/blogs/browser/browser-security/003.html#%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86
 
@@ -32,7 +32,7 @@
 
 4. HTTP/2
 
-  **文章：**
+  文章：
 
     * 研发者社区http2.0解释：https://developers.google.com/web/fundamentals/performance/http2?hl=zh-cn
 
@@ -40,17 +40,17 @@
 
 5. UDP协议（简单理解即可，与TCP区别，有哪方面优势）
   
-  **文章：**
+  文章：
 
     * UDP详解：https://zhuanlan.zhihu.com/p/337678680
 
 6. HTTP/3 （简单了解即可，基于何种协议，为了解决什么问题）
-  **文章：**
+  文章：
 
     * HTTP3.0：https://blog.csdn.net/wolfGuiDao/article/details/108729560
 
 7. 跨域
-  **文章：**
+  文章：
     
     * JSONP：https://www.cnblogs.com/dowinning/archive/2012/04/19/json-jsonp-jquery.html
     
