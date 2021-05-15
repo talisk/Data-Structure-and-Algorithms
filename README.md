@@ -154,3 +154,7 @@
 
 2. 项目：https://github.com/sunyanzhe/virtual-dom
 
+
+## 其他
+ssh大佬总结的进阶文章：https://github.com/sl1673495/frontend-roadmap
+神三元的各种灵魂拷问：https://juejin.cn/user/430664257382462/posts
