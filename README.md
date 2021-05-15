@@ -52,17 +52,20 @@
 7. 跨域
   **文章：**
     
-    * JSONP：
+    * JSONP：https://www.cnblogs.com/dowinning/archive/2012/04/19/json-jsonp-jquery.html
     
-    * CORS：
+    * CORS：http://www.ruanyifeng.com/blog/2016/04/cors.html
 
-    * 反向代理原理
+    * 反向代理原理（了解是什么怎么用即可）：https://www.huaweicloud.com/articles/6b5806d347c88f501f940d45f553e03f.html
+
+    * Nigix反向代理（精力允许可以更进一步）：https://juejin.cn/post/6844903619465068551
 
 ## 浏览器基础
 1. 浏览器缓存
 2. 浏览器渲染原理
+3. 浏览器安全
+4. 浏览器性能指标
 
-## 
 
 ## React
 1. 了解Fiber原理
