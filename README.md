@@ -14,7 +14,7 @@
 
 2. HTTP 
 
-  * HTTP灵魂之问（看到第12标题即可）：https://juejin.cn/post/6844904100035821575
+    * HTTP灵魂之问（看到第12标题即可）：https://juejin.cn/post/6844904100035821575
 
 3. HTTPS SSL/TLS
   
@@ -49,9 +49,19 @@
 ## 浏览器基础
 1. 浏览器缓存
 2. 浏览器渲染原理
-3. 浏览器安全
-4. 浏览器性能指标
-
+    * 现代浏览器是如何工作的（P1）：https://zhuanlan.zhihu.com/p/267488164
+    * 现代浏览器是如何工作的（P2）：https://zhuanlan.zhihu.com/p/267730159
+    * 现代浏览器是如何工作的（P3）：https://zhuanlan.zhihu.com/p/267763621
+    * 现代浏览器是如何工作的（P4）：https://zhuanlan.zhihu.com/p/267819104
+    * 无线性能优化：Compositie：https://developer.aliyun.com/article/40799
+    * 层叠上下文：https://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/
+3. 浏览器垃圾回收机制
+    * V8 引擎垃圾内存回收原理解析：https://juejin.cn/post/6844903993420840967
+4. 浏览器安全
+    * XSS：https://tech.meituan.com/2018/09/27/fe-security.html
+    * CSRF：https://tech.meituan.com/2018/10/11/fe-security-csrf.html
+5. 浏览器性能指标
+    
 
 ## React
 1. 了解Fiber原理
@@ -64,5 +74,6 @@
 4. vdom也可以看下一章
 
 ## VDOM 与Diff
-文档：http://hcysun.me/vue-design/zh/essence-of-comp.html
-项目：https://github.com/sunyanzhe/virtual-dom
+1. 文档：http://hcysun.me/vue-design/zh/essence-of-comp.html
+
+2. 项目：https://github.com/sunyanzhe/virtual-dom
